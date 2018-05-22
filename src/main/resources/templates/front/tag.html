@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="front/fragment/base :: common_head(~{::title}, ~{})">
+    <title th:text="${currentTag.name}">标签</title>
+</head>
+
+<body th:replace="front/fragment/base :: common_body(~{::content}, ~{})">
+            <div th:fragment="content">
+                <div class="bg-white p-lg-3 mb-3">
+                    <h3 th:text="${currentTag.name}"></h3>
+                    <hr>
+                    <p  th:text="${currentTag.description}"></p>
+                </div>
+
+                <div class="media-list summary-list">
+                    <div class="media bg-white mb-1 mb-sm-2 p-lg-3" th:each="article : ${articles}">
+                        <div class="align-self-center mr-2 mr-lg-3 w-25 modal-open">
+                            <a th:href="@{'/detail/' + ${article.id}}">
+                                <img class="media-object article-img w-100" th:src="@{${article.imgLink}? ${article.imgLink} : '/imgs/default.png'}" alt="图片">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading f-17">
+                                <a class="text-info" th:href="@{'/detail/' + ${article.id}}" th:text="${article.title}" target="_blank"> </a>
+                            </h4>
+                            <p th:text="${article.summary}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" th:with="page='tag'">
+<head th:replace="admin/fragment/base :: common_head"> </head>
+
+<body th:replace="admin/fragment/base :: common_body(~{::content}, ~{::script})">
+    <div th:fragment="content">
+        <div class="card">
+            <div class="card-header">
+                标签管理
+                <button class="btn btn-primary float-right" id="add-tag-btn">添加</button>
+            </div>
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>标签</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody th:remove="all-but-first">
+                    <tr th:each="tag : ${tags}">
+                        <th th:text="${tag.id}">1</th>
+                        <td th:text="${tag.name}">python在深度学习领域的应用</td>
+                        <td>
+                            <button class="btn btn-primary modify-tag-btn" id="" th:attr="tag-id=${tag.id}">修改</button>
+                            <a th:href="@{'deletetag/' + ${tag.id}}" class="btn btn-danger">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade" id="tag-modal" tabindex="-1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-title">title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="tag-form">
+                            <div class="form-group">
+                                <label for="tag-name" class="col-form-label">标签名</label>
+                                <input type="text" class="form-control" id="tag-name" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="tag-description" class="col-form-label">描述</label>
+                                <textarea class="form-control" id="tag-description" name="description"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="save-tag-btn">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function(){
+            $("#add-tag-btn").click(function(){
+                $("#modal-title").text("新建标签")
+                $("#save-tag-btn").click(function(){
+                    var form = $("#tag-form")
+                    form.attr({
+                        "action" : "addtag",
+                        "method" : "post",
+                    })
+                    form.submit()
+                })
+                $("#tag-modal").modal("show")
+            })
+
+            $(".modify-tag-btn").click(function(){
+                var id = $(this).attr("tag-id")
+                $("#modal-title").text("修改标签" + id)
+                var form = $("#tag-form")
+                    form.attr({
+                        "action" : "updatetag/" + id,
+                        "method" : "post",
+                    })
+                $("#save-tag-btn").click(function(){
+                    form.submit()
+                    $("#tag-modal").modal("hide")
+                })
+                $("#tag-modal").modal("show")
+            })
+        })
+    </script>
+</body>
+</html>

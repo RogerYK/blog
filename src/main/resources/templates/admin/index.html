@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" mdContent="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" mdContent="ie=edge">
+    <title>管理</title>
+</head>
+<body>
+    <h3>文章列表</h3>
+    <a th:href="@{write}">添加</a>
+    <ul th:each="article : ${articles}">
+        <li>
+            <span th:text="${article.title}"></span>
+            <a th:href="@{'update/' + ${article.id}}">修改</a>
+            <a th:href="@{'delete/' + ${article.id}}">删除</a>
+        </li>
+    </ul>
+</body>
+</html>

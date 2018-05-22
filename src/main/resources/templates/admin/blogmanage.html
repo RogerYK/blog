@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" th:with="page='blog'">
+
+<head th:replace="admin/fragment/base :: common_head"></head>
+
+<body th:replace="admin/fragment/base :: common_body(~{::content}, ~{})">
+    <div th:fragment="content">
+        <div class="card">
+            <div class="card-header">
+                博客管理
+                <a class="btn btn-primary float-right" href="blogadd">写博客</a>
+            </div>
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>标题</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody th:remove="all-but-first">
+                    <tr th:each="article : ${articles}">
+                        <th th:text="${article.id}"></th>
+                        <td th:text="${article.title}"></td>
+                        <td>
+                            <a th:href="@{'blogupdate/' + ${article.id}}" class="btn btn-primary">修改</button>
+                            <a th:href="@{'deleteblog/' + ${article.id}}" class="btn btn-danger">删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

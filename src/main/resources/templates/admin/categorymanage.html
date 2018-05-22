@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" th:with="page='category'">
+<head th:replace="admin/fragment/base :: common_head">
+</head>
+
+<body th:replace="admin/fragment/base :: common_body(~{::content}, ~{::script})">
+    <div th:fragment="content">
+        <div class="card">
+            <div class="card-header">
+                分类管理
+                <button id="add-category-btn" class="btn btn-primary float-right">添加</button>
+            </div>
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>分类</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="category : ${categories}">
+                        <th th:text="${category.id}">1</th>
+                        <td th:text="${category.name}">python在深度学习领域的应用</td>
+                        <td>
+                            <button class="btn btn-primary modify-category-btn" th:attr="category-id=${category.id}">修改</button>
+                            <a class="btn btn-danger" th:href="@{'deletecategory/' + ${category.id}}">删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade" id="category-modal" tabindex="-1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-title">title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="category-form">
+                            <div class="form-group">
+                                <label for="category-name" class="col-form-label">分类名</label>
+                                <input type="text" class="form-control" id="category-name" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="category-description" class="col-form-label">描述</label>
+                                <textarea class="form-control" id="category-description" name="description"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="save-category-btn">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            $("#add-category-btn").click(function(){
+                $("#modal-title").text("新建分类")
+                $("#save-category-btn").click(function(){
+                    var form = $("#category-form")
+                    form.attr({
+                        "action" : "addcategory",
+                        "method" : "post",
+                    })
+                    form.submit()
+                })
+                $("#category-modal").modal("show")
+            })
+
+            $(".modify-category-btn").click(function(){
+                var id = $(this).attr("category-id")
+                $("#modal-title").text("修改标签" + id)
+                var form = $("#category-form")
+                    form.attr({
+                        "action" : "updatecategory/" + id,
+                        "method" : "post",
+                    })
+                $("#save-category-btn").click(function(){
+                    form.submit()
+                    $("#category-modal").modal("hide")
+                })
+                $("#category-modal").modal("show")
+            })
+        })
+    </script>
+</body>
+</html>

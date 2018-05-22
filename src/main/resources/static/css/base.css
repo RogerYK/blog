@@ -1,0 +1,59 @@
+body {
+    background: #f4f4f4;
+    padding-top: 4.8rem;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+a {
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #ea6f5a;
+}
+
+.nav-item a.active {
+    text-decoration: none;
+    color: #ea6f5a;
+}
+
+.tag:nth-child(9n+1) {
+    background:#78BBE6;
+}
+.tag:nth-child(9n+2){
+    background:#FF895D;
+}
+.tag:nth-child(9n+3) {
+    background:#A3DE83;
+}
+.tag:nth-child(9n+4) {
+    background:#00BBF0;
+}
+.tag:nth-child(9n+5) {
+    background:#FF2E63;
+}
+.tag:nth-child(9n+6) {
+    background:#0D7377;
+}
+.tag:nth-child(9n+7) {
+    background:#AC005D;
+}
+.tag:nth-child(9n+8) {
+    background:#0881A3;
+}
+.tag:nth-child(9n+9) {
+    background:#EDA045;
+}
+.tag:hover {
+    color:#fff;
+    background:#333;
+}
+.article-img:hover {
+    transform: scale(1.1);
+}
+.summary-list .media:hover {
+    box-shadow:0 2px 6px rgba(0, 0, 0, 0.275)
+}
