@@ -1,9 +1,7 @@
 package blog.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -14,6 +12,9 @@ public class Category {
     private String name;
 
     private String description;
+
+    @OneToMany(mappedBy = "category")
+    private List<Article> articles;
 
     public Category() {}
 
@@ -43,5 +44,13 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 }

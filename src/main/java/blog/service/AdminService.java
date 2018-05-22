@@ -104,7 +104,7 @@ public class AdminService {
         tagRepository.save(tag);
     }
 
-    public List<Tag> tagList() {
+    public List<Tag> getTagList() {
         return tagRepository.findAll();
     }
 

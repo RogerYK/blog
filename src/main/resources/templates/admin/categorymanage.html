@@ -24,7 +24,7 @@
                         <td th:text="${category.name}">python在深度学习领域的应用</td>
                         <td>
                             <button class="btn btn-primary modify-category-btn" th:attr="category-id=${category.id}">修改</button>
-                            <a class="btn btn-danger" th:href="@{'deletecategory/' + ${category.id}}">删除</button>
+                            <a th:class="'btn btn-danger ' + (${#lists.isEmpty(category.articles)}? '' : 'disabled')" th:href="@{'deletecategory/' + ${category.id}}">删除</button>
                         </td>
                     </tr>
                 </tbody>

@@ -23,7 +23,7 @@
                         <td th:text="${tag.name}">python在深度学习领域的应用</td>
                         <td>
                             <button class="btn btn-primary modify-tag-btn" id="" th:attr="tag-id=${tag.id}">修改</button>
-                            <a th:href="@{'deletetag/' + ${tag.id}}" class="btn btn-danger">删除</a>
+                            <a th:class="'btn btn-danger ' + (${#lists.isEmpty(tag.articles)}? '' : 'disabled')" th:href="@{'deletetag/' + ${tag.id}}" >删除</a>
                         </td>
                     </tr>
                 </tbody>

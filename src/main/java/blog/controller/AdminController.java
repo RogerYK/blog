@@ -22,7 +22,6 @@ import java.util.Optional;
 @RequestMapping("/admin")
 public class AdminController {
     private Logger logger = LoggerFactory.getLogger(AdminController.class);
-    //TODO: 解决删除问题， 美化页面
 
     @Value("${blog.username}")
     private String username;
@@ -87,33 +86,32 @@ public class AdminController {
     @RequestMapping("/deleteblog/{id}")
     public String deleteBlog(@PathVariable("id") Long id) {
         adminService.deleteArticle(id);
-        return "redirect:/admin";
+        return "redirect:/admin/blogmanage";
     }
 
 
     @RequestMapping(value = "/saveblog", method = RequestMethod.POST)
     public String saveBlog(ArticleForm articleForm) {
         adminService.saveArticle(articleForm);
-        return "redirect:/admin";
+        return "redirect:/admin/blogmanage";
     }
 
     @RequestMapping("/updateblog/{id}")
     public String updateBlog(ArticleForm articleForm) {
         adminService.saveArticle(articleForm);
-        return "redirect:/admin";
+        return "redirect:/admin/blogmanage";
     }
 
 
     @RequestMapping("/tagmanage")
     public String tagManager(Model model) {
-        List<Tag> tags = adminService.tagList();
+        List<Tag> tags = adminService.getTagList();
         model.addAttribute("tags", tags);
         return "/admin/tagmanage";
     }
 
     @RequestMapping(value = "/updatetag/{id}", method = RequestMethod.POST)
     public String updateTag(Tag tag) {
-        System.out.println(tag);
         adminService.updateTag(tag);
         return "redirect:/admin/tagmanage";
     }

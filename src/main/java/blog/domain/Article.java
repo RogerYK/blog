@@ -44,10 +44,10 @@ public class Article {
     @Column(name = "show_count", columnDefinition = "tinyint default 0")
     private Integer showCount;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     private Category category;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.PERSIST})
     @JoinTable(name = "article_tag",
         joinColumns = {@JoinColumn(name = "article_id")},
         inverseJoinColumns = {@JoinColumn(name = "tag_id")})

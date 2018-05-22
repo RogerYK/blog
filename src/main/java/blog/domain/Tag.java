@@ -1,10 +1,8 @@
 package blog.domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Tag {
@@ -15,6 +13,9 @@ public class Tag {
     private String name;
 
     private String description;
+
+    @ManyToMany(mappedBy = "tags")
+    private List<Article> articles;
 
     public String toString() {
         return "id:" + id + ",name:" + name + ",descri:" + description + "\n";
@@ -48,5 +49,13 @@ public class Tag {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 }
