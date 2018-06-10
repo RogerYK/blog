@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,22 +30,14 @@ public class FrontController {
         model.addAttribute("articles", articles);
         model.addAttribute("tags", tags);
         model.addAttribute("categories", categories);
-        return "/front/index";
+        return "front/index";
     }
 
     @RequestMapping("/detail/{id}")
-    public String detailPage(@PathVariable("id") Long id, Model model) {
-        if (id == null) {
-            return "/common/error";
-        }
-        Optional<Article> article = frontService.blogFindById(id);
-        if (article.isPresent()) {
-            model.addAttribute("article", article.get());
-            return "/front/detail";
-        } else {
-            model.addAttribute("error", "文章不存在");
-            return "common/error";
-        }
+    public String detailPage(@PathVariable("id") Long id, HttpSession session, Model model) {
+        Article article = frontService.getArticle(id, session);
+        model.addAttribute("article", article);
+        return "front/detail";
     }
 
     @RequestMapping("/archive")

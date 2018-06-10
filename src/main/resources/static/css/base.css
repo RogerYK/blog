@@ -57,3 +57,82 @@ a:hover {
 .summary-list .media:hover {
     box-shadow:0 2px 6px rgba(0, 0, 0, 0.275)
 }
+
+.summary-list .avatar {
+    width:1.5rem;
+    height:1.5rem;
+    margin-right: 0.2rem;
+    border-radius: 50%;
+}
+
+.summary-list .cate {
+    color: #ea6f5a;
+}
+
+#to-top {
+    position: fixed;
+    bottom: 4em;
+    right: 5%;
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background-color: #34495e;
+    top: auto;
+    display:none;
+    cursor: pointer;
+    color: #fff;
+    opacity: .4;
+    z-index:9999;
+}
+#to-top:hover{
+    opacity: .9;
+}
+#to-top i {
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    display: block;
+}
+.error-msg {
+    font-size: 2em;
+}
+
+.h1, h1 {
+    font-size: 1.4em;
+}
+.h2, h2 {
+    font-size: 1.3em;
+}
+.h3, h3 {
+    font-size: 1.2em;
+}
+.h4, h4 {
+    font-size: 1.1em;
+}
+.h5, h5 {
+    font-size: 1.05em;
+}
+.h6, h6 {
+    font-size: 1em;
+}
+
+
+.f-17 {
+    font-size:17px;
+}
+.f-16 {
+    font-size:16px;
+}
+.f-15 {
+    font-size:15px;
+}
+.f-14 {
+    font-size:14px;
+}
+.f-13 {
+    font-size:13px;
+}
+.f-12 {
+    font-size:12px;
+}

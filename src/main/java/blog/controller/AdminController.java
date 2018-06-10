@@ -9,12 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,14 +37,7 @@ public class AdminController {
 
     @RequestMapping("")
     public String index() {
-        return "redirect:/admin/login";
-    }
-
-    @RequestMapping("/index")
-    public String index(Model model) {
-        List<Article> articles = adminService.articleList();
-        model.addAttribute("articles", articles);
-        return "admin/index";
+        return "redirect:/admin/blogmanage";
     }
 
     @RequestMapping("/login")
@@ -50,20 +46,27 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/dologin", method = RequestMethod.POST)
-    public String dologin(String username, String password, Model model) {
+    public String dologin(String username, String password, HttpSession session, Model model) {
         if (this.username.equals(username) && this.password.equals(password)) {
-            return "redirect:index";
+            session.setAttribute("admin", "admininfo");
+            return "redirect:/admin/";
         } else {
-            model.addAttribute("error", "用户名或密码错误");
-            return "redirect:admin/login";
+            model.addAttribute("msg", "用户名或密码错误");
+            return "redirect:/admin/login";
         }
+    }
+
+    @RequestMapping("/loginout")
+    public String loginout(HttpSession session) {
+        session.removeAttribute("admin");
+        return "redirect:/admin/login";
     }
 
     @RequestMapping("/blogmanage")
     public String blogManager(Model model) {
         List<Article> articles = adminService.articleList();
         model.addAttribute("articles", articles);
-        return "/admin/blogmanage";
+        return "admin/blogmanage";
     }
 
     @RequestMapping("/blogadd")
@@ -76,11 +79,11 @@ public class AdminController {
         Optional<Article> articleOptional = adminService.blogFindById(id);
         if (!articleOptional.isPresent()) {
             model.addAttribute("error", "指定文章不存在");
-            return "/admin/error";
+            return "admin/error";
         } else {
             model.addAttribute("articleForm", new ArticleForm(articleOptional.get()));
         }
-        return "/admin/blogadd";
+        return "admin/blogadd";
     }
 
     @RequestMapping("/deleteblog/{id}")
@@ -107,7 +110,7 @@ public class AdminController {
     public String tagManager(Model model) {
         List<Tag> tags = adminService.getTagList();
         model.addAttribute("tags", tags);
-        return "/admin/tagmanage";
+        return "admin/tagmanage";
     }
 
     @RequestMapping(value = "/updatetag/{id}", method = RequestMethod.POST)

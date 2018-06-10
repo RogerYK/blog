@@ -7,8 +7,11 @@ import blog.repository.ArticleRepository;
 import blog.repository.CategoryRepository;
 import blog.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Service
@@ -65,6 +68,25 @@ public class FrontService {
 
     public Category getCategory(Long id) {
         return categoryRepository.getOne(id);
+    }
+
+    @Transactional
+    public Article getArticle(Long id, HttpSession session) {
+        Article article = articleRepository.getOne(id);
+        String key = "read_time_" + id;
+        Object readTime = session.getAttribute(key);
+        if (readTime == null) {
+            article.setShowCount(article.getShowCount() + 1);
+            session.setAttribute(key, new Date());
+        } else {
+            Date nowTime = new Date();
+            long offsetTime = nowTime.getTime() - ((Date)readTime).getTime();
+            if (offsetTime / 1000 > 60 * 30) {
+                article.setShowCount(article.getShowCount() + 1);
+                session.setAttribute(key, new Date());
+            }
+        }
+        return article;
     }
 
     public List<Article> getArticles(Category category) {

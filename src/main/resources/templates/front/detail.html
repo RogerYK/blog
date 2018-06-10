@@ -1,16 +1,40 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="front/fragment/base :: common_head(~{::title}, ~{})">
+<head th:replace="front/fragment/base :: common_head(~{::title}, ~{::link})">
     <title th:text="${article.title}"></title>
+    <link rel="stylesheet" href="/css/detail.css">
 </head>
 <body>
-    <dir th:replace="~{front/fragment/base :: navbar}"></dir>
-    <dev class="container">
+    <div th:replace="~{front/fragment/base :: navbar}"></div>
+    <div th:replace="~{front/fragment/base :: to-top-btn}"></div>
+
+    <div class="container">
         <div class="row">
             <div class="col-lg-9">
-                <div class="card">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb py-2 mb-2 f-15 bg-white">
+                        <li class="breadcrumb-item" aria-current="page">
+                            <a href="/">
+                                <i class="fas fa-home mr-1"></i>
+                                首页
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">
+                            <a th:href="@{'/category/' + ${article.category.id}}" th:text="${article.category.name}"></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page" th:text="${article.title}">
+                        </li>
+                    </ol>
+                </nav>
+                <div class="card ruond-0 border-0">
                     <div class="card-body">
-                        <h4 class="card-title text-center text-info" th:text="${article.title}"></h4>
+                        <h1 class="card-title font-weight-bold text-center text-info" th:text="${article.title}"></h1>
+                        <hr />
+                        <div class="text-center f-13">
+                            <span class="mx-2" th:text="${#dates.format(article.createTime, 'yyyy-MM-dd hh:mm')}"></span>
+                            <span class="mx-2">阅读 [[${article.showCount}]]</span>
+                            <span class="mx-2">评论 0</span>
+                        </div>
                         <div class="article-body mt-3 f-17" th:utext="${article.htmlContent}"></div>
                     </div>
                 </div>
@@ -19,6 +43,8 @@
                 <div class="article-clo"></div>
             </div>
         </div>
-    </dev>
+    </div>
+
+    <th:block th:replace="~{front/fragment/base :: script}" />
 </body>
 </html>

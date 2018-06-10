@@ -51,13 +51,17 @@
         </div>
     </nav>
 
+    <div th:fragment="to-top-btn" class="text-center" id="to-top" style="display: none">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
     <div class="container">
         <div class="row">
             <div class="col-lg-8" th:include="${content}">
             </div>
             <div class="col-lg-4">
                 <div class="card mb-3 px-3">
-                    <div class="card-header bg-white">
+                    <div class="card-header rounded-0 border-0">
                         <strong>
                             <i class="fas fa-book mr-2"></i>文章分类</strong>
                     </div>
@@ -67,7 +71,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="card mb-3 px-3">
+                <div class="card rounded-0 border-0 mb-3 px-3">
                     <div class="card-header bg-white">
                         <strong>
                             <i class="fas fa-tags mr-2"></i>标签</strong>
@@ -80,9 +84,10 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="/js/base.js"></script>
 
     <th:block th:replace="${script}" />
 </body>
