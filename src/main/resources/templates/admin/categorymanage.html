@@ -23,7 +23,7 @@
                         <th th:text="${category.id}">1</th>
                         <td th:text="${category.name}">python在深度学习领域的应用</td>
                         <td>
-                            <button class="btn btn-primary modify-category-btn" th:attr="category-id=${category.id}">修改</button>
+                            <button class="btn btn-primary mr-2 modify-category-btn" th:attr="category-id=${category.id}">修改</button>
                             <a th:class="'btn btn-danger ' + (${#lists.isEmpty(category.articles)}? '' : 'disabled')" th:href="@{'deletecategory/' + ${category.id}}">删除</button>
                         </td>
                     </tr>
@@ -49,6 +49,7 @@
                                 <label for="category-description" class="col-form-label">描述</label>
                                 <textarea class="form-control" id="category-description" name="description"></textarea>
                             </div>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -59,36 +60,6 @@
             </div>
         </div>
     </div>
-    <script>
-        $(function(){
-            $("#add-category-btn").click(function(){
-                $("#modal-title").text("新建分类")
-                $("#save-category-btn").click(function(){
-                    var form = $("#category-form")
-                    form.attr({
-                        "action" : "addcategory",
-                        "method" : "post",
-                    })
-                    form.submit()
-                })
-                $("#category-modal").modal("show")
-            })
-
-            $(".modify-category-btn").click(function(){
-                var id = $(this).attr("category-id")
-                $("#modal-title").text("修改标签" + id)
-                var form = $("#category-form")
-                    form.attr({
-                        "action" : "updatecategory/" + id,
-                        "method" : "post",
-                    })
-                $("#save-category-btn").click(function(){
-                    form.submit()
-                    $("#category-modal").modal("hide")
-                })
-                $("#category-modal").modal("show")
-            })
-        })
-    </script>
+    <script src="/js/categorymanage.js"></script>
 </body>
 </html>

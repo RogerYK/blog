@@ -3,6 +3,7 @@ package blog.service;
 import blog.domain.Article;
 import blog.domain.Category;
 import blog.domain.Tag;
+import blog.domain.User;
 import blog.domain.form.ArticleForm;
 import blog.repository.ArticleRepository;
 import blog.repository.CategoryRepository;
@@ -60,7 +61,7 @@ public class AdminService {
 
         MultipartFile img = articleForm.getArticleImg();
         if (img != null) {
-            System.out.println(img.getOriginalFilename());
+//            System.out.println(img.getOriginalFilename());
             String[] filePath = img.getOriginalFilename().split("\\\\");
             String fileName = "";           //暂时不考虑文件名重复问题。
             fileName = filePath[filePath.length - 1];
@@ -78,7 +79,7 @@ public class AdminService {
                 article.setImgLink("/imgs/" + fileName);
             }
         }
-
+        article.setAuthor((User) UserService.getCurrentUser());
         articleRepository.save(article);
     }
 

@@ -18,6 +18,9 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne
+    private User author;
+
     @Column(name = "title")
     private String title;
 
@@ -42,7 +45,7 @@ public class Article {
     private String imgLink;
 
     @Column(name = "show_count", columnDefinition = "tinyint default 0")
-    private Integer showCount;
+    private Integer showCount = 0;
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private Category category;
@@ -52,6 +55,9 @@ public class Article {
         joinColumns = {@JoinColumn(name = "article_id")},
         inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     private List<Tag> tags;
+
+    @OneToMany(mappedBy = "belongArticle",cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
 
 
     public Article() { }
@@ -81,8 +87,17 @@ public class Article {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public String getSummary() {
@@ -148,5 +163,13 @@ public class Article {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

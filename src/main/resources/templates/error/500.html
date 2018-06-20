@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="front/fragment/base :: common_head(~{::title}, ~{})">
+    <title>出错了</title>
+</head>
+
+<body>
+    <dir th:replace="~{front/fragment/base :: navbar}"></dir>
+    <dir th:replace="~{front/fragment/base :: to-top-btn}"></dir>
+
+    <dev class="container">
+        <div class="d-flex justify-content-center">
+            <div class="d-inline-block text-center">
+                <div class="error-msg text-warning">
+                    <h1>
+                        <i class="fas fa-frown"></i>崩溃了!</h1>
+                    <p>别担心，我带你回去</p>
+                    <div class="clearfix">
+                        <a class="btn btn-outline-warning float-left" href="/">返回主页</a>
+                        <a class="btn btn-outline-warning float-right" href="javascript:history.go(-1)">后退一步</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

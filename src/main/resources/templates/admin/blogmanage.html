@@ -23,7 +23,7 @@
                         <th th:text="${article.id}"></th>
                         <td th:text="${article.title}"></td>
                         <td>
-                            <a th:href="@{'blogupdate/' + ${article.id}}" class="btn btn-primary">修改</button>
+                            <a th:href="@{'blogupdate/' + ${article.id}}" class="btn btn-primary mr-2">修改</button>
                             <a th:href="@{'deleteblog/' + ${article.id}}" class="btn btn-danger">删除</button>
                         </td>
                     </tr>

@@ -34,6 +34,7 @@
                 </fieldset>
                 <input type="text" name="mdContent" style="display: none;" id="input-md">
                 <input type="text" name="htmlContent" style="display: none;" id="input-html">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             </form>
             <div class="form-group">
                 <div class="editormd" id="editormd">
@@ -48,21 +49,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="/vendor/editor/editormd.min.js"></script>
-    <script>
-        $(function() {
-            var editor = editormd("editormd", {
-                path : "/vendor/editor/lib/",
-                width :  "100%",
-                height : 800,
-                saveHTMLToTextarea : true,
-            })
-
-            $("#blog-release").bind("click", function() {
-                $("#input-md").val(editor.getMarkdown())
-                $("#input-html").val(editor.getHTML())
-                $("#blog-form").submit()
-            })
-        })
-    </script>
+    <script src="/js/blogadd.js"></script>
 </body>
 </html>

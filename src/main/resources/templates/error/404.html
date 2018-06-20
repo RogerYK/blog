@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="front/fragment/base :: common_head(~{::title}, ~{})">
+    <title>页面未找到</title>
+</head>
+<body>
+    <dir th:replace="~{front/fragment/base :: navbar}"></dir>
+    <dir th:replace="~{front/fragment/base :: to-top-btn}"></dir>
+    
+    <dev class="container">
+        <dir class="d-flex justify-content-center">
+            <div class="d-inline-block text-center">
+                <img class="img-fluid" src="/imgs/404.png" alt="404">
+                <div class="error-msg">
+                    <p>访问的页面不存在</p>
+                    <div class="clearfix">
+                        <a class="btn btn-outline-warning float-left" href="/">返回主页</a>
+                        <a class="btn btn-outline-warning float-right" href="javascript:history.go(-1)">后退一步</a>
+                    </div>
+                </div>
+            </div>
+        </dir>
+    </div>
+</body>
+</html>

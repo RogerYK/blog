@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="front/fragment/base :: common_head(~{::title}, ~{})">
+    <title>个人资料</title>
+</head>
+<body>
+    <div th:replace="~{front/fragment/base :: navbar}"></div>
+    <div th:replace="~{front/fragment/base :: to-top-btn}"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-8 col-md-6 mx-auto px-md-5">
+                <div class="card rounded-0 px-lg-4">
+                    <div class="card-header text-center bg-white">
+                        <h3 class="my-2 text-info">修改资料</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/account/profile/change" enctype="multipart/form-data" method="POST">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <div class="form-group">
+                                <label for="email-address">邮箱地址</label>
+                                <input type="text" class="form-control" id="email-address"
+                                    name="emailAddress" placeholder="邮箱地址">
+                            </div>
+                            <div class="form-group">
+                                <label for="avatar-img">头像</label>
+                                <input type="file" class="form-control-file" id="avatar-img"
+                                    name="avatarImg">
+                            </div>
+                            <button class="btn btn-info btn-sm" type="submit">更新资料</button>
+                        </form>
+                        <div class="more-link text-center mb-5">
+                            <div class="link-title text-muted">
+                                <span>更多操作</span>
+                            </div>
+                            <div class="link-btn mt-5">
+                                <a class="btn btn-info btn-sm" href="/account/profile">查看资料</a>
+                                <a class="btn btn-info btn-sm" href="/account/password/change">修改密码</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <th:block th:replace="~{front/fragment/base :: script}" />
+</body>
+</html>

@@ -26,12 +26,6 @@ import java.util.Optional;
 public class AdminController {
     private Logger logger = LoggerFactory.getLogger(AdminController.class);
 
-    @Value("${blog.username}")
-    private String username;
-
-    @Value("${blog.password}")
-    private String password;
-
     @Autowired
     private AdminService adminService;
 
@@ -40,27 +34,6 @@ public class AdminController {
         return "redirect:/admin/blogmanage";
     }
 
-    @RequestMapping("/login")
-    public String login() {
-        return "admin/login";
-    }
-
-    @RequestMapping(value = "/dologin", method = RequestMethod.POST)
-    public String dologin(String username, String password, HttpSession session, Model model) {
-        if (this.username.equals(username) && this.password.equals(password)) {
-            session.setAttribute("admin", "admininfo");
-            return "redirect:/admin/";
-        } else {
-            model.addAttribute("msg", "用户名或密码错误");
-            return "redirect:/admin/login";
-        }
-    }
-
-    @RequestMapping("/loginout")
-    public String loginout(HttpSession session) {
-        session.removeAttribute("admin");
-        return "redirect:/admin/login";
-    }
 
     @RequestMapping("/blogmanage")
     public String blogManager(Model model) {

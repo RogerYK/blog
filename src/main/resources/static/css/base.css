@@ -20,6 +20,16 @@ a:hover {
     color: #ea6f5a;
 }
 
+#user-menu-btn > .avatar {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.dropdown-menu {
+    right: 0;
+}
+
 .tag:nth-child(9n+1) {
     background:#78BBE6;
 }
@@ -135,4 +145,12 @@ a:hover {
 }
 .f-12 {
     font-size:12px;
+}
+
+#profile-avatar .avatar{
+    width: 80px;
+    height: 80px;
+    padding: 0.25rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
 }

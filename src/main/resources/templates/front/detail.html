@@ -3,6 +3,7 @@
 <head th:replace="front/fragment/base :: common_head(~{::title}, ~{::link})">
     <title th:text="${article.title}"></title>
     <link rel="stylesheet" href="/css/detail.css">
+    <link rel="stylesheet" href="/vendor/editor/css/editormd.min.css">
 </head>
 <body>
     <div th:replace="~{front/fragment/base :: navbar}"></div>
@@ -38,6 +39,67 @@
                         <div class="article-body mt-3 f-17" th:utext="${article.htmlContent}"></div>
                     </div>
                 </div>
+
+                <div class="bg-white mt-2 ruond-0 border-0" >
+                    <div th:if="${#authorization.expression('isAuthenticated()')}"
+                        class="card ruond-0 border-0" >
+                        <div class="card-body ruond-0 border-0">
+                            <div class="editormd" id="editormd">
+                                <textarea style="display: none" placeholder="评论请使用Markdown语法"></textarea>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white ruond-0 border-0 clearfix">
+                            <span class="text-info" id="reply-to"></span>
+                            <button class="btn btn-info float-right btn-sm" 
+                                id="submit-btn" th:attr="data-article-id=${article.id},data-submit-url='/comment/'">提交评论</button>
+                            <button class="btn btn-danger btn-sm mr-2 float-right d-none" id="reply-cancel">取消回复</button>
+                        </div>
+                    </div>
+
+                    <div class="card-body ruond-0 border-0" id="comment-list">
+                        <div class="mb-2">
+                            <strong>[[${#lists.size(article.comments)}]] 个评论</strong>
+                        </div>
+                        <th:block th:each="comment : ${article.comments}">
+                            <div  class="comment-parnet pt-2">
+                                <div class="media">
+                                    <img class="align-self-center avatar mr-3" th:src="${comment.author.avatarLink}" alt="">
+                                    <div class="media-body" th:object="${comment.author}">
+                                        <a class="float-right mr-2 reply-btn" href="#editor"
+                                            th:attr="data-reply-username=*{username}, data-reply-comment-id=${comment.id}"
+                                        >回复</a>
+                                        <p><strong th:text="*{username}"></strong></p>
+                                        <p class="small text-muted">
+                                            [[${#ids.seq('')}]]楼 - [[${#dates.format(comment.createTime, 'yyyy-MM-dd')}]]
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="comment-body" th:utext="${comment.content}"> </div>
+                            </div>
+                            <div class="ml-4">
+                                <div class="comment-child pt-2" th:each="childComment : ${comment.childComments}">
+                                        <div class="media">
+                                            <img class="align-self-center avatar mr-3" th:src="${childComment.author.avatarLink}" alt="">
+                                            <div class="media-body" th:object="${childComment.author}">
+                                                <a class="float-right mr-2 reply-btn" href="#editormd"
+                                                    th:attr="data-reply-username=*{username},data-reply-comment-id=${childComment.id}">回复</a>
+                                                <p>
+                                                    <strong th:text="*{username}"></strong>
+                                                    @ [[${childComment.replyName}]]
+                                                </p>
+                                                <p class="small text-muted">
+                                                    [[${#dates.format(comment.createTime, 'yyyy-MM-dd')}]]
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="childComment-body" th:utext="${childComment.content}"> </div>
+                                    
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+
+                </div>
             </div>
             <div class="col-lg-3">
                 <div class="article-clo"></div>
@@ -46,5 +108,14 @@
     </div>
 
     <th:block th:replace="~{front/fragment/base :: script}" />
+    <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+        <script src="/vendor/editor/editormd.min.js"></script>
+        <script src="/js/comment.js"></script>
+    </th:block>
+    <script th:unless="${#authorization.expression('isAuthenticated()')}">
+        $('.reply-btn').click(function() {
+            alert('登陆后才可留言，请先登陆')
+        })
+    </script>
 </body>
 </html>
