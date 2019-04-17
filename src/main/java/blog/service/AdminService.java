@@ -5,15 +5,16 @@ import blog.domain.Category;
 import blog.domain.Tag;
 import blog.domain.User;
 import blog.domain.form.ArticleForm;
+import blog.domain.form.JArticleForm;
 import blog.repository.ArticleRepository;
 import blog.repository.CategoryRepository;
 import blog.repository.TagRepository;
+import blog.utils.FileSaveUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,23 +62,44 @@ public class AdminService {
 
         MultipartFile img = articleForm.getArticleImg();
         if (img != null) {
-//            System.out.println(img.getOriginalFilename());
-            String[] filePath = img.getOriginalFilename().split("\\\\");
-            String fileName = "";           //暂时不考虑文件名重复问题。
-            fileName = filePath[filePath.length - 1];
-            if (!fileName.isEmpty()) {
-                File path = new File(new File("upload/imgs/").getAbsolutePath(),
-                        fileName);
-                if (!path.getParentFile().exists()) {
-                    path.getParentFile().mkdirs();
-                }
-                try {
-                    img.transferTo(path);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                article.setImgLink("/imgs/" + fileName);
+            String imgLink = FileSaveUtil.saveUploadImage(img);
+            article.setImgLink(imgLink);
+        }
+        article.setAuthor((User) UserService.getCurrentUser());
+        articleRepository.save(article);
+    }
+
+
+    public void saveArticle(JArticleForm articleForm) {
+        Article article = new Article();
+        article.setId(articleForm.getId());
+        article.setTitle(articleForm.getTitle());
+        article.setSummary(articleForm.getSummary());
+        article.setHtmlContent(articleForm.getHtmlContent());
+        article.setMdContent(articleForm.getMdContent());
+
+        String[] tagNames = articleForm.getTagNames().split(";");
+        List<Tag> tags = new ArrayList<>();
+        for (String tagName : tagNames) {
+            Tag tag = tagRepository.findByName(tagName);
+            if (tag == null) {
+                tag = new Tag(tagName);
             }
+            tags.add(tag);
+        }
+        article.setTags(tags);
+
+        String categoryName = articleForm.getCategoryName();
+        Category category = categoryRepository.findByName(categoryName);
+        if (category == null) {
+            category = new Category(categoryName);
+        }
+        article.setCategory(category);
+
+        String img = articleForm.getArticleImgBase64();
+        if (img != null) {
+            String imgLink = FileSaveUtil.saveBase64Img(img);
+            article.setImgLink(imgLink);
         }
         article.setAuthor((User) UserService.getCurrentUser());
         articleRepository.save(article);

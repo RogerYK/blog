@@ -1,54 +1,56 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" mdcontent="width=device-width, initial-scale=1.0">
-    <meta http-equiv="x-ua-compatible" mdcontent="ie=edge">
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <meta http-equiv="X-UA-Compatible" mdContent="ie=edge">
     <title>我的博客</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="/vendor/editor/css/editormd.min.css">
 </head>
+
 <body>
-        <div class="container">
-            <form th:action="${articleForm}? '/admin/updateblog/' + ${articleForm.id} : 'saveblog'" enctype="multipart/form-data" method="POST" id="blog-form">
-                <fieldset class="form-group">
-                    <label for="input-title">标题</label>
-                    <input th:value="${articleForm}? ${articleForm.title}" type="text" class="form-control" name="title" id="input-title">
-                </fieldset>
-                <fieldsset class="form-group">
-                    <label for="input-category">分类</label>
-                    <input th:value="${articleForm}? ${articleForm.title}" type="text" class="form-control" name="categoryName" id="input-category">
-                </fieldset>
-                <fieldset class="form-group">
-                    <label for="input-tagNames">标签</label>
-                    <input th:value="${articleForm}? ${articleForm.tagNames}" type="text" class="form-control" name="tagNames" id="input-tags">
-                    <small class="text-muxd">不同标签以;分割</small>
-                </fieldset>
-                <fieldset class="form-group">
-                    <label for="article-img">图片</label>
-                    <input type="file" class="form-control-file" name="articleImg" id="article-img">
-                </fieldset>
-                <fieldset class="form-group">
-                    <label for="summary">概述</label>
-                    <input  th:value="${articleForm}? ${articleForm.summary}"type="text" class="form-control" name="summary" id="summary">
-                </fieldset>
-                <input type="text" name="mdContent" style="display: none;" id="input-md">
-                <input type="text" name="htmlContent" style="display: none;" id="input-html">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            </form>
-            <div class="form-group">
-                <div class="editormd" id="editormd">
-                    <textarea th:text="${articleForm}? ${articleForm.mdContent}" style="display: none;"></textarea>
-                </div>
+    <div class="container">
+        <form th:action="${articleForm}? '/admin/updateblog/' + ${articleForm.id} : 'saveblog'" enctype="multipart/form-data" method="POST"
+            id="blog-form">
+            <fieldset class="form-group">
+                <label for="input-title">标题</label>
+                <input th:value="${articleForm}? ${articleForm.title}" type="text" class="form-control" name="title" id="input-title">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="input-category">分类</label>
+                <input th:value="${articleForm}? ${articleForm.title}" type="text" class="form-control" name="categoryName" id="input-category">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="input-tags">标签</label>
+                <input th:value="${articleForm}? ${articleForm.tagNames}" type="text" class="form-control" name="tagNames" id="input-tags">
+                <small class="text-muxd">不同标签以;分割</small>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="article-img">图片</label>
+                <input type="file" class="form-control-file" name="articleImg" id="article-img">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="summary">概述</label>
+                <input th:value="${articleForm}? ${articleForm.summary}" type="text" class="form-control" name="summary" id="summary">
+            </fieldset>
+            <textarea name="mdContent" style="display: none;" id="input-md"></textarea>
+            <textarea name="htmlContent" style="display: none;" id="input-html"></textarea>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        </form>
+        <div class="form-group">
+            <div class="editormd" id="editormd">
+                <textarea th:text="${articleForm}? ${articleForm.mdContent}" style="display: none;"></textarea>
             </div>
-            <button class="btn btn-primary" id="blog-release">发布</button>
         </div>
+        <button type="button" class="btn btn-primary" id="blog-release">发布</button>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <th:block th:replace="admin/fragment/base :: script"></th:block>
     <script src="/vendor/editor/editormd.min.js"></script>
     <script src="/js/blogadd.js"></script>
 </body>
+
 </html>

@@ -56,12 +56,12 @@
                         </div>
                     </div>
 
-                    <div class="card-body ruond-0 border-0" id="comment-list">
+                    <div class="card-body round-0 border-0" id="comment-list">
                         <div class="mb-2">
                             <strong>[[${#lists.size(article.comments)}]] 个评论</strong>
                         </div>
                         <th:block th:each="comment : ${article.comments}">
-                            <div  class="comment-parnet pt-2">
+                            <div  class="comment-parent pt-2">
                                 <div class="media">
                                     <img class="align-self-center avatar mr-3" th:src="${comment.author.avatarLink}" alt="">
                                     <div class="media-body" th:object="${comment.author}">

@@ -3,6 +3,7 @@ package blog.domain;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,6 +19,7 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     private User author;
 
@@ -47,15 +49,18 @@ public class Article {
     @Column(name = "show_count", columnDefinition = "tinyint default 0")
     private Integer showCount = 0;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private Category category;
 
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.PERSIST})
     @JoinTable(name = "article_tag",
         joinColumns = {@JoinColumn(name = "article_id")},
         inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     private List<Tag> tags;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "belongArticle",cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
