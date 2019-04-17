@@ -1,6 +1,7 @@
 # 个人博客网站
 
 一个使用spring boot 2 + spring mvc + thymeleaf + mysql 8 + spring security制作的个人博客网站
+前端借鉴了<https://github.com/Hopetree/izone>, 在此感谢。
 
 ## 图片
 
